@@ -50,8 +50,8 @@
 						"referenceName": "ds_adls_Parquet",
 						"type": "DatasetReference",
 						"parameters": {
-							"container": "landing",
-							"folder": "test"
+							"container": "caresync-project",
+							"folder": "landing/test"
 						}
 					}
 				]
