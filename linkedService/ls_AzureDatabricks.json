@@ -12,7 +12,8 @@
 					"type": "LinkedServiceReference"
 				},
 				"secretName": "adb-token"
-			}
+			},
+			"existingClusterId": "1001-043440-6jol3mhn"
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/linkedservices"
