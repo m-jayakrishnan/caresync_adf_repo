@@ -36,7 +36,7 @@
 				"type": "Script",
 				"dependsOn": [
 					{
-						"activity": "read table details",
+						"activity": "Lookup1",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -59,15 +59,54 @@
 						{
 							"type": "Query",
 							"text": {
-								"value": "UPDATE caresync.watermark\nSET watermark_value = (\n    SELECT MAX(@{activity('read table details').output.firstRow.watermark_column})\n    FROM caresync.table_config\n)",
+								"value": "UPDATE caresync.watermark\nSET watermark_value = CAST(\n    '@{activity('Lookup1').output.firstRow.max_watermark}'\n    AS datetimeoffset(7)\n)\nWHERE table_id = @{activity('read table details').output.firstRow.table_id};",
 								"type": "Expression"
 							}
 						}
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"
 				}
+			},
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [
+					{
+						"activity": "read table details",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "PostgreSqlV2Source",
+						"query": {
+							"value": "SELECT MAX(@{activity('read table details').output.firstRow.watermark_column}) AS max_watermark\nFROM public.@{activity('read table details').output.firstRow.source_table_name};",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00"
+					},
+					"dataset": {
+						"referenceName": "ds_PostgreSql",
+						"type": "DatasetReference"
+					}
+				}
 			}
 		],
+		"variables": {
+			"max_watermark": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
