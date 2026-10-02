@@ -227,7 +227,7 @@
 						{
 							"type": "Query",
 							"text": {
-								"value": "UPDATE caresync.audit_log\nSET STATUS='FAILED', end_time=SYSUTCDATETIME(), records_written=@{activity('bronze to silver').output.runOutput}\nWHERE adf_run_id='@{pipeline().parameters.adf_run_id}' AND table_id=activity('read table details').output.firstRow.table_name;",
+								"value": "UPDATE caresync.audit_log\nSET STATUS='FAILED', end_time=SYSUTCDATETIME(), records_written=@{activity('bronze to silver').output.runOutput}\nWHERE adf_run_id='@{pipeline().parameters.adf_run_id}' AND table_id=@{activity('read table details').output.firstRow.table_name};",
 								"type": "Expression"
 							}
 						}
