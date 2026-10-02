@@ -59,7 +59,7 @@
 						{
 							"type": "Query",
 							"text": {
-								"value": "UPDATE caresync.watermark\nSET watermark_value = CAST(\n    CAST(\n        '@{activity('Lookup1').output.firstRow.max_watermark}'\n        AS datetimeoffset(7)\n    )\n    AS datetime2(7)\n)\nWHERE table_id = @{activity('read table details').output.firstRow.table_id};",
+								"value": "UPDATE caresync.watermark\nSET watermark_value = CONVERT(\n    varchar(200),\n    CAST(\n        CAST(\n            '@{activity('Lookup1').output.firstRow.max_watermark}'\n            AS datetimeoffset(7)\n        )\n        AS datetime2(7)\n    ),\n    126\n)\nWHERE table_id = @{activity('read table details').output.firstRow.table_id};",
 								"type": "Expression"
 							}
 						}
