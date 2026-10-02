@@ -48,6 +48,7 @@
 						"value": "@activity('read source tables list').output.value",
 						"type": "Expression"
 					},
+					"isSequential": false,
 					"activities": [
 						{
 							"name": "source_to_silver_ingest",
@@ -99,7 +100,7 @@
 									{
 										"type": "Query",
 										"text": {
-											"value": "INSERT INTO caresync.audit_log\n(adf_run_id,\ntable_id,\nstage,\nstatus,\nstart_time) \nVALUES(@{pipeline().parameters.adf_run_id},@{item().table_id},'SOURCE_TO_SILVER','in_progress',SYSUTCDATETIME())",
+											"value": "INSERT INTO caresync.audit_log\n(adf_run_id,\ntable_id,\nstage,\nstatus,\nstart_time) \nVALUES('@{pipeline().parameters.adf_run_id}',@{item().table_id},'SOURCE_TO_SILVER','in_progress',SYSUTCDATETIME())",
 											"type": "Expression"
 										}
 									}
@@ -154,7 +155,7 @@
 			},
 			"adf_run_id": {
 				"type": "string",
-				"defaultValue": "a3"
+				"defaultValue": "test6"
 			}
 		},
 		"variables": {
