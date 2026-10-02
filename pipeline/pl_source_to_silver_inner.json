@@ -209,7 +209,7 @@
 								"source": {
 									"type": "PostgreSqlV2Source",
 									"query": {
-										"value": "SELECT * FROM public.@{activity('read table details').output.firstRow.source_table_name} WHERE @{activity('read table details').output.firstRow.watermark_column}>variables('watermark_value')",
+										"value": "SELECT * FROM public.@{activity('read table details').output.firstRow.source_table_name} WHERE @{activity('read table details').output.firstRow.watermark_column}>@{activity('read watermark').output.firstRow.watermark_value}",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00"
