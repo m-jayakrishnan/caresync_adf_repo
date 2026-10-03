@@ -120,11 +120,11 @@
 							"type": "Expression"
 						},
 						"load_type": {
-							"value": "@activity('read watermark').output.firstRow.load_type",
+							"value": "@activity('read table details').output.firstRow.load_type",
 							"type": "Expression"
 						},
-						"merge_key": {
-							"value": "@coalesce(activity('read table details').output.firstRow.merge_key,'')",
+						"merge_keys": {
+							"value": "@coalesce(activity('read table details').output.firstRow.merge_keys,'')",
 							"type": "Expression"
 						}
 					}

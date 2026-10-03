@@ -1,0 +1,28 @@
+{
+	"name": "tr_caresync",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pl_source_to_silver_main",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"source_system": "neon_postgress",
+					"adf_run_id": "test14"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 14,
+				"startTime": "2026-10-03T05:58:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}
