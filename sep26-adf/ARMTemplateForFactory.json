@@ -687,6 +687,23 @@
 										],
 										"scriptBlockExecutionTimeout": "02:00:00"
 									}
+								},
+								{
+									"name": "fail status",
+									"type": "Fail",
+									"dependsOn": [
+										{
+											"activity": "update_failed_audit",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"userProperties": [],
+									"typeProperties": {
+										"message": "pipelne failed",
+										"errorCode": "fail audit written"
+									}
 								}
 							]
 						}
