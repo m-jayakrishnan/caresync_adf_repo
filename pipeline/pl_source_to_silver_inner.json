@@ -352,7 +352,14 @@
 								{
 									"name": "ingest csv to landing",
 									"type": "Copy",
-									"dependsOn": [],
+									"dependsOn": [
+										{
+											"activity": "read watermark_copy1",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
 									"policy": {
 										"timeout": "0.12:00:00",
 										"retry": 0,
@@ -366,7 +373,12 @@
 											"type": "BinarySource",
 											"storeSettings": {
 												"type": "AzureBlobFSReadSettings",
-												"recursive": true
+												"recursive": false,
+												"modifiedDatetimeStart": {
+													"value": "@activity('read watermark_copy1').output.firstRow.watermark_value",
+													"type": "Expression"
+												},
+												"deleteFilesAfterCompletion": false
 											},
 											"formatSettings": {
 												"type": "BinaryReadSettings"
@@ -404,6 +416,34 @@
 											}
 										}
 									]
+								},
+								{
+									"name": "read watermark_copy1",
+									"type": "Lookup",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"source": {
+											"type": "AzureSqlSource",
+											"sqlReaderQuery": {
+												"value": "SELECT watermark_value FROM caresync.watermark WHERE table_id=@{pipeline().parameters.table_id}",
+												"type": "Expression"
+											},
+											"queryTimeout": "02:00:00",
+											"partitionOption": "None"
+										},
+										"dataset": {
+											"referenceName": "ds_AzureSqlTable1",
+											"type": "DatasetReference"
+										}
+									}
 								}
 							]
 						}
