@@ -196,42 +196,6 @@
 						}
 					},
 					{
-						"name": "update_success_audit",
-						"type": "Script",
-						"dependsOn": [
-							{
-								"activity": "bronze to silver",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"linkedServiceName": {
-							"referenceName": "ls_AzureSqlDatabase",
-							"type": "LinkedServiceReference"
-						},
-						"typeProperties": {
-							"scripts": [
-								{
-									"type": "Query",
-									"text": {
-										"value": "UPDATE caresync.audit_log\nSET STATUS='SUCCESS', end_time=SYSUTCDATETIME(), records_written=@{activity('bronze to silver').output.runOutput}\nWHERE adf_run_id='@{pipeline().parameters.adf_run_id}' AND table_id=@{activity('read table details').output.firstRow.table_id};",
-										"type": "Expression"
-									}
-								}
-							],
-							"scriptBlockExecutionTimeout": "02:00:00"
-						}
-					},
-					{
 						"name": "check load type",
 						"type": "IfCondition",
 						"dependsOn": [
@@ -435,6 +399,37 @@
 								"value": "@not(equals(activity('read table details').output.firstRow.load_type, 'FULL'))",
 								"type": "Expression"
 							},
+							"ifFalseActivities": [
+								{
+									"name": "update_success_full_audit",
+									"type": "Script",
+									"dependsOn": [],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"linkedServiceName": {
+										"referenceName": "ls_AzureSqlDatabase",
+										"type": "LinkedServiceReference"
+									},
+									"typeProperties": {
+										"scripts": [
+											{
+												"type": "Query",
+												"text": {
+													"value": "UPDATE caresync.audit_log\nSET STATUS='SUCCESS', end_time=SYSUTCDATETIME(), records_written=@{activity('bronze to silver').output.runOutput}\nWHERE adf_run_id='@{pipeline().parameters.adf_run_id}' AND table_id=@{activity('read table details').output.firstRow.table_id};",
+													"type": "Expression"
+												}
+											}
+										],
+										"scriptBlockExecutionTimeout": "02:00:00"
+									}
+								}
+							],
 							"ifTrueActivities": [
 								{
 									"name": "update watermark",
@@ -499,6 +494,42 @@
 											"parameters": {}
 										}
 									}
+								},
+								{
+									"name": "update_success_merge_audit",
+									"type": "Script",
+									"dependsOn": [
+										{
+											"activity": "update watermark",
+											"dependencyConditions": [
+												"Succeeded"
+											]
+										}
+									],
+									"policy": {
+										"timeout": "0.12:00:00",
+										"retry": 0,
+										"retryIntervalInSeconds": 30,
+										"secureOutput": false,
+										"secureInput": false
+									},
+									"userProperties": [],
+									"linkedServiceName": {
+										"referenceName": "ls_AzureSqlDatabase",
+										"type": "LinkedServiceReference"
+									},
+									"typeProperties": {
+										"scripts": [
+											{
+												"type": "Query",
+												"text": {
+													"value": "UPDATE caresync.audit_log\nSET STATUS='SUCCESS', end_time=SYSUTCDATETIME(), records_written=@{activity('bronze to silver').output.runOutput}\nWHERE adf_run_id='@{pipeline().parameters.adf_run_id}' AND table_id=@{activity('read table details').output.firstRow.table_id};",
+													"type": "Expression"
+												}
+											}
+										],
+										"scriptBlockExecutionTimeout": "02:00:00"
+									}
 								}
 							]
 						}
@@ -530,9 +561,9 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_AzureSqlTable1')]",
 				"[concat(variables('factoryId'), '/linkedServices/ls_AzureDatabricks')]",
-				"[concat(variables('factoryId'), '/linkedServices/ls_AzureSqlDatabase')]",
 				"[concat(variables('factoryId'), '/datasets/ds_PostgreSql')]",
-				"[concat(variables('factoryId'), '/datasets/ds_adls_Parquet')]"
+				"[concat(variables('factoryId'), '/datasets/ds_adls_Parquet')]",
+				"[concat(variables('factoryId'), '/linkedServices/ls_AzureSqlDatabase')]"
 			]
 		},
 		{
