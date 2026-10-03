@@ -42,14 +42,6 @@
 		"ls_adls_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://sepdatalake.dfs.core.windows.net/"
-		},
-		"tr_caresync_properties_pl_source_to_silver_main_parameters_source_system": {
-			"type": "string",
-			"defaultValue": "neon_postgress"
-		},
-		"tr_caresync_properties_pl_source_to_silver_main_parameters_adf_run_id": {
-			"type": "string",
-			"defaultValue": "test14"
 		}
 	},
 	"variables": {
@@ -932,40 +924,6 @@
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/tr_caresync')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "pl_source_to_silver_main",
-							"type": "PipelineReference"
-						},
-						"parameters": {
-							"source_system": "[parameters('tr_caresync_properties_pl_source_to_silver_main_parameters_source_system')]",
-							"adf_run_id": "[parameters('tr_caresync_properties_pl_source_to_silver_main_parameters_adf_run_id')]"
-						}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 14,
-						"startTime": "2026-10-03T05:58:00",
-						"timeZone": "India Standard Time",
-						"schedule": {}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pl_source_to_silver_main')]"
-			]
 		}
 	]
 }

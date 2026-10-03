@@ -31,12 +31,6 @@
 		},
 		"ls_adls_properties_typeProperties_url": {
 			"value": "https://sepdatalake.dfs.core.windows.net/"
-		},
-		"tr_caresync_properties_pl_source_to_silver_main_parameters_source_system": {
-			"value": "neon_postgress"
-		},
-		"tr_caresync_properties_pl_source_to_silver_main_parameters_adf_run_id": {
-			"value": "test14"
 		}
 	}
 }

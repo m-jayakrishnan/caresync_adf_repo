@@ -43,14 +43,6 @@
 			"type": "string",
 			"defaultValue": "https://sepdatalake.dfs.core.windows.net/"
 		},
-		"tr_caresync_properties_pl_source_to_silver_main_parameters_source_system": {
-			"type": "string",
-			"defaultValue": "neon_postgress"
-		},
-		"tr_caresync_properties_pl_source_to_silver_main_parameters_adf_run_id": {
-			"type": "string",
-			"defaultValue": "test14"
-		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -104,12 +96,6 @@
 					},
 					"ls_PostgreSql_properties_typeProperties_username": {
 						"value": "[parameters('ls_PostgreSql_properties_typeProperties_username')]"
-					},
-					"tr_caresync_properties_pl_source_to_silver_main_parameters_source_system": {
-						"value": "[parameters('tr_caresync_properties_pl_source_to_silver_main_parameters_source_system')]"
-					},
-					"tr_caresync_properties_pl_source_to_silver_main_parameters_adf_run_id": {
-						"value": "[parameters('tr_caresync_properties_pl_source_to_silver_main_parameters_adf_run_id')]"
 					}
 				}
 			},
