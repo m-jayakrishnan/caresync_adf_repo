@@ -19,7 +19,7 @@
 					"value": "@dataset().directory",
 					"type": "Expression"
 				},
-				"fileSystem": "caresync_project"
+				"fileSystem": "caresync-project"
 			}
 		}
 	}
