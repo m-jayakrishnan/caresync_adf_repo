@@ -1,0 +1,48 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "sep26-adf"
+		},
+		"ls_AzureDatabricks_properties_typeProperties_existingClusterId": {
+			"value": "1001-043440-6jol3mhn"
+		},
+		"ls_AzureKeyVault_properties_typeProperties_baseUrl": {
+			"value": "https://sept-kv.vault.azure.net/"
+		},
+		"ls_AzureSqlDatabase_properties_typeProperties_server": {
+			"value": "septserv.database.windows.net"
+		},
+		"ls_AzureSqlDatabase_properties_typeProperties_database": {
+			"value": "sept-db"
+		},
+		"ls_AzureSqlDatabase_properties_typeProperties_userName": {
+			"value": "septserv"
+		},
+		"ls_PostgreSql_properties_typeProperties_server": {
+			"value": "ep-flat-smoke-azrickss-pooler.c-3.ap-southeast-1.aws.neon.tech"
+		},
+		"ls_PostgreSql_properties_typeProperties_database": {
+			"value": "neondb"
+		},
+		"ls_PostgreSql_properties_typeProperties_username": {
+			"value": "neondb_owner"
+		},
+		"ls_adls_properties_typeProperties_url": {
+			"value": "https://sepdatalake.dfs.core.windows.net/"
+		},
+		"tr_caresync_properties_pl_source_to_silver_main_parameters_source_system": {
+			"value": "neon_postgress"
+		},
+		"tr_caresync_properties_pl_source_to_silver_main_parameters_adf_run_id": {
+			"value": "test14"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
